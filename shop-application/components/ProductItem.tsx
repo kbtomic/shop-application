@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import { Product } from '../types/Product';
+import fontStyles from '../styles/fonts';
+import { COLORS } from '../styles/colors';
 
 interface ProductItemProps {
   product: Product;
@@ -8,16 +10,16 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product, onPress }) => {
-  const {height, width} = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const containerHeight = height * 0.4;
   
   return (
     <TouchableOpacity onPress={onPress} style={[styles.container, { height: containerHeight }]}>
-      <Image source={{ uri: product.mainImageUrl }} style={[styles.image, { height: containerHeight * 0.6 }]}/>
+      <Image source={{ uri: product.mainImageUrl }} style={[styles.image, { height: containerHeight * 0.7 }]}/>
       <View style={styles.details}>
-        <Text style={styles.brandName} numberOfLines={1}>{product.brandName}</Text>
-        <Text style={styles.productName} numberOfLines={1}>{product.name}</Text>
-        <Text style={styles.price}>€{(product.price / 100).toFixed(2)}</Text>
+        <Text style={fontStyles.regular10Black} numberOfLines={1}>{product.brandName}</Text>
+        <Text style={fontStyles.regular12Grey} numberOfLines={1}>{product.name}</Text>
+        <Text style={[styles.price, fontStyles.regular12Black]}>€{(product.price / 100).toFixed(2)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -26,34 +28,22 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 300,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     overflow: 'hidden',
-    margin: 10,
-    
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   image: {
     width: '100%',
     resizeMode: 'contain',
-    borderWidth: 1,
-    borderColor: '#ddd', // Add this for the border color
+    borderWidth: 0.2,
+    borderColor: COLORS.lightGrey,
   },
   details: {
-    padding: 10,
-    justifyContent: 'flex-end',
-  },
-  brandName: {
-    fontSize: 12,
-    color: '#666',
-  },
-  productName: {
-    fontSize: 12,
-    color: '#333',
+    paddingTop: 5,
   },
   price: {
-    fontSize: 12,
-    color: '#333',
-    marginTop: 5,
+    paddingTop: 10,
   },
 }
 );

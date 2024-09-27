@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Products from './screens/Products';
 import { RootStackParamList } from './types/Navigation';
 import ProductDetailView from './screens/ProductDetailView';
+import fontStyles from './styles/fonts';
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
@@ -12,7 +13,7 @@ export default function App() {
     <NavigationContainer>
       <View style={styles.container}>
         <RootStack.Navigator initialRouteName='Products'>
-          <RootStack.Screen name='Products' component={Products} />
+          <RootStack.Screen name='Products' component={Products} options={{ headerShown: false }}/>
           <RootStack.Screen name='ProductDetailView' component={ProductDetailView} />
         </RootStack.Navigator>
       </View>

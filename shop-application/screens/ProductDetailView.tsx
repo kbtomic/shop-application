@@ -13,7 +13,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({navigation, route}
     const allImages = [product.mainImageUrl, ...product.additionalImages];
 
     useEffect(() => {
-        navigation.setOptions({ title: product.name, headerTitleStyle: fontStyles.regular12Black });
+        navigation.setOptions({ title: product.name, headerTitleStyle: fontStyles.mediumBlack, headerBackTitleVisible: false, });
     }, [navigation, product.name]);
     
     const [isDropdownVisible, setDropdownVisible] = useState(false);

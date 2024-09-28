@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { COLORS } from '../../styles/colors';
 import fontStyles from '../../styles/fonts';
+import arrowDownIcon from '../../assets/arrow-down.png';
 
 interface ProductInformationProps {
     brandName: string;
@@ -19,7 +20,10 @@ const ProductInformation: React.FC<ProductInformationProps> = ({ brandName, prod
             <Text style={fontStyles.boldMediumBlack}>{productName}</Text>
             <Text style={[fontStyles.mediumBlack, styles.price]}>{(price / 100).toFixed()}€</Text>
             <TouchableOpacity onPress={onToggleDropdown} style={styles.sizeDropdown}>
-                <Text style={fontStyles.smallGrey}>{selectedSize ? selectedSize : "Choose size"}</Text>
+                <View style={styles.dropdownContent}>
+                    <Text style={fontStyles.smallGrey}>{selectedSize ? selectedSize : "Choose size"}</Text>
+                    <Image source={arrowDownIcon} style={styles.arrow} />
+                </View>
             </TouchableOpacity>
             <Text style={fontStyles.smallGrey}>{description}</Text>
         </View>
@@ -27,6 +31,17 @@ const ProductInformation: React.FC<ProductInformationProps> = ({ brandName, prod
 };
 
 const styles = StyleSheet.create({
+    arrow: {
+        width: 20,
+        height: 15,
+        resizeMode: 'contain',
+    },
+    dropdownContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+    },
     informationContainer: {
         flex: 1,
         padding: 20,

@@ -64,17 +64,17 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({navigation, route}
             </ScrollView>
                 
             <View style={styles.informationContainer}>
-                <Text style={fontStyles.regular14Black}>{product.brandName}</Text>
-                <Text style={fontStyles.bold14Black}>{product.name}</Text>
-                <Text style={[fontStyles.regular16Black, styles.price]}>{(product.price / 100).toFixed()}€</Text>
+                <Text style={fontStyles.mediumBlack}>{product.brandName}</Text>
+                <Text style={fontStyles.boldMediumBlack}>{product.name}</Text>
+                <Text style={[fontStyles.mediumBlack, styles.price]}>{(product.price / 100).toFixed()}€</Text>
 
                 {/* Dropdown for selecting size */}
                 <TouchableOpacity onPress={toggleDropdown} style={styles.sizeDropdown}>
-                    <Text style={fontStyles.regular12Grey}>
+                    <Text style={fontStyles.smallGrey}>
                         {selectedSize ? selectedSize : "Choose size"}
                     </Text>
                 </TouchableOpacity>
-                    <Text style={fontStyles.regular12Grey}>{product.description}</Text>
+                    <Text style={fontStyles.smallGrey}>{product.description}</Text>
             </View>
         </ScrollView>
 
@@ -87,14 +87,14 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({navigation, route}
 
         {isDropdownVisible && (
             <View style={[styles.dropdownContainer, { maxHeight: 0.4 * height }]}>
-                <Text style={[styles.sizeHeader, fontStyles.bold14Black]}>Size</Text>
+                <Text style={[styles.sizeHeader, fontStyles.mediumBlack]}>Size</Text>
                 <ScrollView>
                     <FlashList
                         data={product.sizes}
                         keyExtractor={(size) => size.id}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => selectSize(item.name)} style={styles.sizeItem}>
-                                <Text style={fontStyles.regular12Black}>{item.name}</Text>
+                                <Text style={fontStyles.smallBlack}>{item.name}</Text>
                             </TouchableOpacity>
                         )}
                         estimatedItemSize={30}

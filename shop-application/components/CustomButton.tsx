@@ -12,7 +12,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ onPress, buttonText }) => {
     return (
         <View>
             <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Text style={fontStyles.bold16White}>{buttonText}</Text>
+                <Text style={fontStyles.boldMediumWhite}>{buttonText}</Text>
             </TouchableOpacity>
         </View>
     );

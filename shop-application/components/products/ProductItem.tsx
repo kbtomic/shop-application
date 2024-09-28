@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
-import { Product } from '../types/Product';
-import fontStyles from '../styles/fonts';
-import { COLORS } from '../styles/colors';
+import { Product } from '../../types/Product';
+import fontStyles from '../../styles/fonts';
+import { COLORS } from '../../styles/colors';
 
 interface ProductItemProps {
   product: Product;

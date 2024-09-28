@@ -1,106 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import axios from 'axios';
-import { FlashList } from '@shopify/flash-list';
-import ProductItem from '../components/ProductItem';
 import { Product } from '../types/Product';
 import { ProductsProps } from '../types/Navigation';
-import BrandFilter from '../components/BrandFilter';
+import { COLORS } from '../styles/colors';
+import Header from '../components/products/Header';
+import LoadingIndicator from '../components/products/LoadingIndicator';
+import Error from '../components/products/Error';
+import ActiveFilters from '../components/products/ActiveFilters';
+import apiConfig from '../apiConfig';
+import FilterModal from '../components/products/FilterModal';
+import ProductList from '../components/products/ProductList';
+import NoProducts from '../components/products/NoProducts';
 
 type Props = {
     navigation: ProductsProps;
-  };
+};
 
 const Products: React.FC<Props> = ({ navigation }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+    const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+    const [filterModalVisible, setFilterModalVisible] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     // Fetch products from the JSON server
-    axios.get('http://192.168.0.19:3000/products')
-      .then((response) => {
-        setProducts(response.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+        axios.get(apiConfig.PRODUCTS_URL, { timeout: 7000 })
+            .then((response) => {
+            setProducts(response.data);
+            setLoading(false);
+        })
+            .catch((err) => {
+            setError(err.message);
+            setLoading(false);
+        });
+    }, []);
 
-  // Get unique brand names for the BrandFilter
-  const brandNames = Array.from(new Set(products.map((product) => product.brandName)));
+    // Get unique brand names for the BrandFilter
+    const brandNames = Array.from(new Set(products.map((product) => product.brandName)));
+    const uniqueSizes = Array.from(new Set(products.flatMap(product => product.sizes.map(size => size.name))));
 
-  // Filter products based on selected brand
-  const filteredProducts = selectedBrand
-    ? products.filter((product) => product.brandName === selectedBrand)
-    : products;
+    // Filter products based on selected brand and sizes
+    const filteredProducts = products.filter(product => {
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brandName);
+        const matchesSize = selectedSizes.length === 0 || product.sizes.some(size => selectedSizes.includes(size.name));
+        return matchesBrand && matchesSize;
+    });
 
-  const renderProductItem = ({ item }: { item: Product }) => (
-    <ProductItem
-      product={item}
-      onPress={() => navigation.navigate('ProductDetailView', { product: item })}
-    />
-  );
+    if (loading) {
+        return <LoadingIndicator />;
+    }
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
-      </View>
-    );
-  }
+    if (error) {
+        return <Error message={error} />;
+    }
 
   return (
     <View style={styles.container}>
-        <BrandFilter
-        brands={brandNames}
-        selectedBrand={selectedBrand}
-        onSelectBrand={setSelectedBrand}
-      />
-      <FlashList
-        data={filteredProducts}
-        renderItem={renderProductItem}
-        keyExtractor={(item) => item.productId}
-        contentContainerStyle={styles.list}
-        estimatedItemSize={1580}
-        numColumns={2}
-      />
+        <Header 
+                onPressFilter={() => setFilterModalVisible(true)} 
+                greeting="Hello, user!"
+        />
+        <ActiveFilters 
+                selectedBrands={selectedBrands} 
+                selectedSizes={selectedSizes} 
+        />
+        <FilterModal
+                visible={filterModalVisible}
+                onRequestClose={() => setFilterModalVisible(false)}
+                brandNames={brandNames}
+                selectedBrands={selectedBrands}
+                setSelectedBrands={setSelectedBrands}
+                uniqueSizes={uniqueSizes}
+                selectedSizes={selectedSizes}
+                setSelectedSizes={setSelectedSizes}
+            />
+        {filteredProducts.length === 0 ? (
+            <NoProducts />
+        ) : (
+            <ProductList products={filteredProducts} navigation={navigation} />
+            )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  list: {
-    paddingBottom: 10,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorText: {
-    color: 'red',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: COLORS.white,
+    },
 });
 
 export default Products;

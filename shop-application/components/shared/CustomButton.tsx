@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { COLORS } from '../styles/colors';
-import fontStyles from '../styles/fonts';
+import { COLORS } from '../../styles/colors';
+import fontStyles from '../../styles/fonts';
 
 type CustomButtonProps = {
     onPress: () => void;

@@ -20,6 +20,9 @@ const Header: React.FC<HeaderProps> = ({ greeting, onPressFilter }) => {
 };
 
 const styles = StyleSheet.create({
+    filterButtonText: {
+        color: COLORS.purple,
+    },
     headerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -35,9 +38,6 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         zIndex: 1,
     },
-    filterButtonText: {
-        color: COLORS.purple,
-    }
 });
 
 export default Header;

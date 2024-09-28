@@ -35,6 +35,11 @@ const BrandFilter: React.FC<BrandFilterProps> = ({ brands, selectedBrands, onSel
 };
 
 const styles = StyleSheet.create({
+    brandButton: {
+        backgroundColor: COLORS.white,
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+    },
     container: {
         paddingVertical: 10,
         backgroundColor: COLORS.white,
@@ -46,16 +51,11 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 20,
     },
-    brandButton: {
-        backgroundColor: COLORS.white,
-        paddingHorizontal: 20,
-        paddingVertical: 15,
+    listContent: {
+        paddingBottom: 10,
     },
     selectedBrandText: {
         fontWeight: 'bold',
-    },
-    listContent: {
-        paddingBottom: 10,
     },
 });
 

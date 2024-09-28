@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginHorizontal: 20,
   },
+  details: {
+    paddingTop: 5,
+  },
   image: {
     width: '100%',
     resizeMode: 'contain',
     borderWidth: 0.2,
     borderColor: COLORS.lightGrey,
-  },
-  details: {
-    paddingTop: 5,
   },
   price: {
     paddingTop: 10,

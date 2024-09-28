@@ -62,6 +62,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
 );
 
 const styles = StyleSheet.create({
+    filterLabel: {
+        marginTop: 20,
+        marginHorizontal: 20,
+    },
     modalContainer: {
         flex: 1,
         backgroundColor: COLORS.white,
@@ -71,10 +75,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderBottomWidth: 0.5,
         borderColor: COLORS.lightGrey,
-    },
-    filterLabel: {
-        marginTop: 20,
-        marginHorizontal: 20,
     },
     safeArea: {
         flex: 1,

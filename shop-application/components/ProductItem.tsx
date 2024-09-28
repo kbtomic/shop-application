@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     overflow: 'hidden',
     marginHorizontal: 20,
-    marginVertical: 10,
   },
   image: {
     width: '100%',
